@@ -4,3 +4,6 @@ class Salle:
         self.libelle = libelle
         self.type = type
         self.capacite = capacite
+
+    def afficher_infos(self):
+        print(f"Code: {self.code}, Libelle: {self.libelle}, Type: {self.type}, Capacite: {self.capacite}")
