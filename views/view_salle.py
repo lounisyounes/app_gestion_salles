@@ -70,6 +70,9 @@ class ViewSalle(ctk.CTk):
 
         self.treeList.pack(expand=True, fill="both", padx=10, pady=10)
 
+        self.lister_salles()
+
+
     def ajouter_salle(self):
         salle = Salle(
             self.entry_code.get(),
@@ -82,6 +85,8 @@ class ViewSalle(ctk.CTk):
             messagebox.showinfo("Ajout", message)
         else:
             messagebox.showerror("Ajout", message)
+
+        self.lister_salles()
 
     def modifier_salle(self):
         salle = Salle(
@@ -96,10 +101,14 @@ class ViewSalle(ctk.CTk):
         else:
             messagebox.showerror("Modification", message)
 
+        self.lister_salles()
+
     def supprimer_salle(self):
         code = self.entry_code.get()
         self.service_salle.supprimer_salle(code)
         messagebox.showinfo("Suppression", "Salle supprimee avec succes")
+
+        self.lister_salles()
 
     def rechercher_salle(self):
         code = self.entry_code.get()
@@ -113,3 +122,10 @@ class ViewSalle(ctk.CTk):
             self.entry_capacite.insert(0, salle.capacite)
         else:
             messagebox.showerror("Recherche", "Salle introuvable")
+
+    def lister_salles(self):
+        self.treeList.delete(*self.treeList.get_children())
+        liste = self.service_salle.recuperer_salles()
+        for s in liste:
+            self.treeList.insert("", "end", values=(s.code, s.libelle, s.type, s.capacite))
+
